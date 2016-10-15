@@ -1,0 +1,7 @@
+*.pyc
+__pycache__
+groupmebotenv/
+db.sqlite3
+static/
+.DS_Store
+myproject/settings_secret.py
