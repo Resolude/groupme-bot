@@ -1,6 +1,7 @@
 import json
 import requests
 import re
+import string
 from myproject.settings_secret import token, botid
 
 def receive(message):
@@ -8,8 +9,8 @@ def receive(message):
         content = message['text']
 
         if contains_chat_trigger(content):
-            pattern = re.compile('[\W_]+')
-            content = pattern.sub("", content)
+            pattern = re.compile('([^\s\w]|_)+')
+            content = pattern.sub('', content)
             print(content)
 
             args = content.split()
