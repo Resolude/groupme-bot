@@ -17,7 +17,7 @@ def receive(message):
 
             if len(args) > 0:
                 msg_to_send = get_return_message(args)
-                boturl = 'https://api.groupme.com/v3/bots/post?token=' + token
+                boturl = 'http://api.groupme.com/v3/bots/post?token=' + token
                 headers = {'Content-Type': 'application/json'}
 
                 response_from_groupme = requests.post(boturl, headers=headers, data=msg_to_send)
