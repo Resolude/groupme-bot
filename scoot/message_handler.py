@@ -3,6 +3,7 @@ import requests
 import re
 import string
 from myproject.settings_secret import token, botid
+from foaas import fuck
 
 def receive(message):
     if not_bot(message['sender_type']):
@@ -41,6 +42,14 @@ def get_return_message(args):
     elif args[0].lower() == 'lel':
         if len(args) == 1:
             message = message + 'LEL'
+
+    elif args[0].lower() == 'fuck':
+        if len(args) == 1:
+            foaasMessage = fuck.random(from_= ' ').text[:-3]
+            message = message + foaasMessage
+        elif len(args) == 2:
+            foaasMessage = fuck.random(name=args[1].title(), from_= ' ').text[:-3]
+            message = message + foaasMessage
 
     elif args[0].lower() == 'kek':
         if len(args) == 1:
