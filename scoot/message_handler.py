@@ -5,6 +5,7 @@ import string
 from myproject.settings_secret import token, botid
 from foaas import fuck
 
+
 def receive(message):
     if not_bot(message['sender_type']):
         content = message['text']
@@ -22,6 +23,7 @@ def receive(message):
                 headers = {'Content-Type': 'application/json'}
 
                 response_from_groupme = requests.post(boturl, headers=headers, data=msg_to_send)
+
 
 def get_return_message(args):
     message = '{"text":"'
@@ -45,11 +47,11 @@ def get_return_message(args):
 
     elif args[0].lower() == 'fuck':
         if len(args) == 1:
-            foaasMessage = fuck.random(from_= ' ').text[:-3].replace("'","")
-            message = message + foaasMessage
+            foaas_message = fuck.random(from_=' ').text[:-3].replace("'", "")
+            message = message + foaas_message
         elif len(args) == 2:
-            foaasMessage = fuck.random(name=args[1].title(), from_= ' ').text[:-3].replace("'","")
-            message = message + foaasMessage
+            foaas_message = fuck.random(name=args[1].title(), from_=' ').text[:-3].replace("'", "")
+            message = message + foaas_message
 
     elif args[0].lower() == 'kek':
         if len(args) == 1:
