@@ -46,10 +46,10 @@ def get_return_message(args):
     elif args[0].lower() == 'fuck':
         if len(args) == 1:
             foaasMessage = fuck.random(from_= ' ').text[:-3].replace("'","")
-            message = message + foaasMessage
+            message = message + re.sub(r'[^\x00-\x7F]+', '',foaasMessage)
         elif len(args) == 2:
             foaasMessage = fuck.random(name=args[1].title(), from_= ' ').text[:-3].replace("'","")
-            message = message + foaasMessage
+            message = message + re.sub(r'[^\x00-\x7F]+', '',foaasMessage)
 
     elif args[0].lower() == 'kek':
         if len(args) == 1:
