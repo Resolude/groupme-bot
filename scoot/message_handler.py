@@ -29,6 +29,9 @@ def get_return_message(args):
     if args[0].lower() == 'help':
         message = message + 'Fuck you. There is no help.'
 
+    elif args[0].lower() == 'github':
+        message = message + 'https://github.com/Resolude/groupme-bot'
+
     elif args[0].lower() == 'trigger' or args[0].lower() == 'triggered':
         if len(args) == 1:
             message = message + 'TRIGGERED!'
