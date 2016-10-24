@@ -6,21 +6,29 @@ from myproject.settings_secret import token, botid
 from foaas import fuck
 
 def receive(message):
+    # Determine if incoming message is from a bot
     if not_bot(message['sender_type']):
+        # Assign message text to var content
         content = message['text']
 
+        # If the message starts with the chat trigger
         if contains_chat_trigger(content):
+            # Delete characters that aren't alphanumeric or spaces, also deletes chat trigger
             pattern = re.compile('([^\s\w]|_)+')
             content = pattern.sub('', content)
             print(content)
 
+            # Split message on spaces
             args = content.split()
 
+            # If the message isn't just the chat trigger
             if len(args) > 0:
+                # Get the bot response
                 msg_to_send = get_return_message(args)
                 boturl = 'https://api.groupme.com/v3/bots/post'
                 headers = {'Content-Type': 'application/json'}
 
+                # Send bot reponse to Groupme API
                 response_from_groupme = requests.post(boturl, headers=headers, data=msg_to_send)
 
 def get_return_message(args):
