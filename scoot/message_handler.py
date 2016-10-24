@@ -31,6 +31,14 @@ def get_return_message(args):
 
     elif args[0].lower() == 'github':
         message = message + 'https://github.com/Resolude/groupme-bot'
+        
+    elif args[0].lower() == 'wall':
+        message = message + """████████╗██████╗░██╗░░░██╗███╗░░░███╗██████╗░
+╚══██╔══╝██╔══██╗██║░░░██║████╗░████║██╔══██╗
+░░░██║░░░██████╔╝██║░░░██║██╔████╔██║██████╔╝
+░░░██║░░░██╔══██╗██║░░░██║██║╚██╔╝██║██╔═══╝░
+░░░██║░░░██║░░██║╚██████╔╝██║░╚═╝░██║██║░░░░░
+░░░╚═╝░░░╚═╝░░╚═╝░╚═════╝░╚═╝░░░░░╚═╝╚═╝░░░░░"""
 
     elif args[0].lower() == 'trigger' or args[0].lower() == 'triggered':
         if len(args) == 1:
