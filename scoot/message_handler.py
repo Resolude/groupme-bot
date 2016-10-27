@@ -6,7 +6,7 @@ import requests
 
 from myproject.settings_secret import token, botid
 from foaas import fuck
-import triggers
+from . import triggers
 import urls
 
 headers = {'Content-Type': 'application/json'}
