@@ -1,80 +1,30 @@
 import json
+import random
 import requests
-import re
-import string
+
 from myproject.settings_secret import token, botid
 from foaas import fuck
+import triggers
+import urls
+
+headers = {'Content-Type': 'application/json'}
 
 
 def receive(message):
-    if not_bot(message['sender_type']):
-        content = message['text']
+    message_json = json.loads(message)
+    if not_bot(message_json['sender_type']):
+        content = message_json['text']
 
-        if contains_chat_trigger(content):
-            pattern = re.compile('([^\s\w]|_)+')
-            content = pattern.sub('', content)
-            print(content)
-
-            args = content.split()
-
-            if len(args) > 0:
-                msg_to_send = get_return_message(args)
-                boturl = 'https://api.groupme.com/v3/bots/post'
-                headers = {'Content-Type': 'application/json'}
-
-                response_from_groupme = requests.post(boturl, headers=headers, data=msg_to_send)
-
-
-def get_return_message(args):
-    message = '{"text":"'
-
-    if args[0].lower() == 'help':
-        message = message + 'Fuck you. There is no help.'
-
-    elif args[0].lower() == 'trigger' or args[0].lower() == 'triggered':
-        if len(args) == 1:
-            message = message + 'TRIGGERED!'
-        elif len(args) > 1:
-            for index in range(1, len(args)):
-                if index > 1:
-                    message = message + ' '
-                message = message + args[index].upper()
-            message = message + ' IS TRIGGERED!'
-
-    elif args[0].lower() == 'lel':
-        if len(args) == 1:
-            message = message + 'LEL'
-
-    elif args[0].lower() == 'fuck':
-        if len(args) == 1:
-            foaas_message = fuck.random(from_=' ').text[:-3].replace("'", "")
-            message = message + foaas_message
-        elif len(args) == 2:
-            foaas_message = fuck.random(name=args[1].title(), from_=' ').text[:-3].replace("'", "")
-            message = message + foaas_message
-
-    elif args[0].lower() == 'kek':
-        if len(args) == 1:
-            message = message + 'TOPKEK'
-
-    elif args[0].lower() == 'flake':
-        if len(args) > 1:
-            for index in range(1, len(args)):
-                if index > 1:
-                    message = message + ' '
-                message = message + args[index].upper()
-            message = message + ' IS A FLAKE!'
-
-    message = message + '","bot_id":"' + botid + '"}'
-    print(message)
-    return message
-
-
-def contains_chat_trigger(content):
-    if content.startswith('!'):
-        return True
-    else:
-        return False
+        if (triggers.has_trigger(content)
+                and (content.startswith(triggers.command_sequence)
+                     or random.randint(0, 100) < 25)):
+            try:
+                data = triggers.get_response(content)
+                data["bot_id"] = botid
+                print(data)
+                requests.post(urls.bot_url, headers=headers, data=data)
+            except ValueError:
+                pass
 
 
 def not_bot(sender_type):
