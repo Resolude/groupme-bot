@@ -5,6 +5,7 @@ from scoot.message_handler import receive
 
 import json
 
+
 # Create your views here.
 
 @csrf_exempt
