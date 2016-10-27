@@ -1,5 +1,5 @@
 import random
-import responses
+from . import responses
 
 
 def has_trigger(value: str) -> bool:
@@ -35,7 +35,7 @@ def get_response(message: str) -> dict:
             bot_response = triggers[trigger](message)
 
             # sanitize the bot response for utf-8
-            response['text'] = bot_response.decode("utf-8", "ignore").encode("utf-8")
+            response['text'] = bot_response.encode("utf-8")
 
             # return the response json.
             return response

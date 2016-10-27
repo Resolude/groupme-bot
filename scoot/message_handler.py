@@ -7,14 +7,11 @@ import requests
 from myproject.settings_secret import token, botid
 from foaas import fuck
 from . import triggers
-import urls
 
 headers = {'Content-Type': 'application/json'}
 
 
-def receive(message):
-    message_json = json.loads(message)
-
+def receive(message_json):
     # Determine if incoming message is from a bot
     if not_bot(message_json['sender_type']):
         content = message_json['text']
@@ -36,7 +33,7 @@ def receive(message):
                 print(data)
 
                 # post the response
-                requests.post(urls.bot_url, headers=headers, data=data)
+                requests.post('https://api.groupme.com/v3/bots/post', headers=headers, data=data)
             except ValueError:
                 pass
 
