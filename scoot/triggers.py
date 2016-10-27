@@ -34,8 +34,8 @@ def get_response(message: str) -> dict:
             # get the bots response
             bot_response = triggers[trigger](message)
 
-            # sanitize the bot response for utf-8
-            # response['text'] = bot_response.encode("utf-8")
+            # TODO: sanitize the bot response for utf-8
+            # Sanitizing using encode('utf-8') appended a random 'b' character, need a different way
             response['text'] = bot_response
 
             # return the response json.
