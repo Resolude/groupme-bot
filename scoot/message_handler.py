@@ -24,16 +24,16 @@ def receive(message_json):
             # Delete characters that aren't alphanumeric or spaces, also deletes chat trigger
             pattern = re.compile('([^\s\w]|_)+')
             content = pattern.sub('', content)
-            print(content)
 
             try:
                 # try and get the bot response
                 data = triggers.get_response(content)
                 data["bot_id"] = botid
-                print(data)
+                data_json = json.dumps(data)
+                print(data_json)
 
                 # post the response
-                requests.post('https://api.groupme.com/v3/bots/post', headers=headers, data=data)
+                requests.post('https://api.groupme.com/v3/bots/post', headers=headers, data=data_json)
             except ValueError:
                 pass
 
