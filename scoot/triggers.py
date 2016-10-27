@@ -1,3 +1,4 @@
+import random
 import responses
 
 
@@ -24,17 +25,23 @@ def get_response(message: str) -> dict:
 
     response = {}
 
-    if message.startswith(command_sequence):
+    # 20% chance to get fucked
+    if message.startswith(command_sequence) and random.randint(0, 100) < 20:
         response['text'] = "Don't tell me what to do dad."
 
     for trigger in triggers:
         if trigger in message:
-            response['text'] = triggers[trigger](message)
+            # get the bots response
+            bot_response = triggers[trigger](message)
 
-    if 'text' not in response:
-        raise ValueError('Specified message has no triggers.')
-    else:
-        return response
+            # sanitize the bot response for utf-8
+            response['text'] = bot_response.decode("utf-8", "ignore").encode("utf-8")
+
+            # return the response json.
+            return response
+
+    # if we reach here there was no matching trigger
+    raise ValueError('Specified message has no triggers.')
 
 triggers = {
     "flake": responses.get_flake,
