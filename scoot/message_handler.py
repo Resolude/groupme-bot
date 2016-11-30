@@ -4,7 +4,7 @@ import re
 
 import requests
 
-from myproject.settings_secret import token, botid
+from myproject.settings_secret import botid
 from foaas import fuck
 from . import triggers
 
